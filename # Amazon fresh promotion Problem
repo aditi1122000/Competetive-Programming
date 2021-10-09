@@ -1,0 +1,51 @@
+%%time
+codeList = [['apple', 'apple'], ['banana', 'anything', 'banana']] 
+# shoppingCart = ['orange', 'apple', 'apple', 'banana', 'orange', 'banana']
+# shoppingCart = ['banana', 'orange', 'banana', 'apple', 'apple']
+# shoppingCart = ['apple', 'banana', 'apple', 'banana', 'orange', "banana"]
+shoppingCart = ['apple', 'apple', 'apple', 'banana']
+def event(codeList, shoppingCart):
+  match = 0
+  index = 0
+  order = 0
+  if len(codeList) and len(shoppingCart) > 0:
+    for code in codeList:
+      code = [i.lower() for i in code]
+      while index < len(shoppingCart):
+        if "anything" in code:
+          # "anything" at start
+          start = code.index('anything')
+          last = code.index('anything')
+          if start == 0:
+            if any(map(lambda x: shoppingCart[x:x + len(code[1:])] == code[1:], range(len(shoppingCart) - len(code[1:]) + 1))) is True:
+              match += 1
+              break;
+          # "anything" at last
+          elif last == (len(code)-1):
+            if any(map(lambda x: shoppingCart[x:x + len(code[:-1])] == code[:-1], range(len(shoppingCart) - len(code[:-1]) + 1))) is True:
+              match += 1
+              break;
+          # "anything" at middlle
+          else:
+            mid = code.index('anything')
+            if any(map(lambda x: shoppingCart[x:x + len(code[:mid])] == code[:mid], range(len(shoppingCart) - len(code[:mid]) + 1))) and any(map(lambda x: shoppingCart[x:x + len(code[mid:])] == code[mid:], range(len(shoppingCart) - len(code[mid:]) + 1))) is True:
+              match += 1
+              break;
+          
+          index += 1
+        else:
+          if any(map(lambda x: shoppingCart[x:x + len(code)] == code, range(len(shoppingCart) - len(code) + 1))) is True:
+            match += 1
+            break;                                                                            
+          index += 1
+      order += 1
+  else:
+    match += 1
+  #checking order of the codeList 
+  if order > 0:
+    return 0
+  else:
+    return match
+
+result = event(codeList, shoppingCart)
+print(result)
