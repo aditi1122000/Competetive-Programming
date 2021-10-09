@@ -1,0 +1,18 @@
+%%time
+
+repository = ['mobile', 'mouse','moneypot', 'monitor', 'mousepad']
+customerQuery = 'mouse'
+#generating data according to the customerQuery. Starts searching after 2 chars.
+def search(repository, customerQuery):
+  searched_keywords = []
+  for i in range(len(customerQuery)+1):
+    if i > 1:
+      # print(customerQuery[0:i])
+      suggested_output = sorted(list(filter(lambda x: customerQuery[0:i] in x, repository))[:3])
+      lower_case = list(map(str.lower, suggested_output))
+      # print(lower_case)
+      searched_keywords.append(lower_case)
+  return searched_keywords
+   
+ result = search(repository, customerQuery)
+ print(result)
